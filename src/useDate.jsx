@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function useDate(initialValue = new Date()){
-  const [currentDate, setCurrentDate] = useState(initialValue)
+export default function useDate(){
+  const [currentDate, setCurrentDate] = useState(new Date())
 
-  const updateDate = () => {
-    setCurrentDate(new Date())
+    useEffect (() =>{
+      const interval = setInterval(() => {
+        setCurrentDate(new Date())
+      }, 1000)
+
+      return () => {
+      clearInterval(interval);
+      }
+    }, [])    
+    return currentDate;
   }
 
-  return [currentDate, updateDate]
-}
+  
